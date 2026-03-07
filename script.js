@@ -143,6 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const formData = new FormData(contactForm);
     const data = {
       name: formData.get('name'),
+      phone: formData.get('phone'),
       email: formData.get('email'),
       service: formData.get('service'),
       message: formData.get('message'),
