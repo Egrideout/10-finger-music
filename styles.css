@@ -612,7 +612,18 @@ ul {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-md);
-  align-items: center;
+  align-items: stretch;
+}
+
+.about-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.about-content-footer {
+  margin-top: auto;
+  padding-top: var(--space-md);
 }
 
 .about-text {
