@@ -2,6 +2,21 @@
    10 Finger Music — Interactivity
    =================================== */
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  projectId: "tfm-music-db-2026",
+  appId: "1:1036854352534:web:d66c50547eb66f963140b7",
+  storageBucket: "tfm-music-db-2026.firebasestorage.app",
+  apiKey: "AIzaSyCvF0enmZ_venV6H5FtIFWAqqx0aOEjDpw",
+  authDomain: "tfm-music-db-2026.firebaseapp.com",
+  messagingSenderId: "1036854352534"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 document.addEventListener('DOMContentLoaded', () => {
   // --- Mobile Navigation ---
   const navToggle = document.getElementById('nav-toggle');
@@ -114,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Contact Form Handler ---
   const contactForm = document.getElementById('contact-form');
 
-  contactForm.addEventListener('submit', (e) => {
+  contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const submitBtn = document.getElementById('form-submit');
@@ -124,8 +139,20 @@ document.addEventListener('DOMContentLoaded', () => {
     submitBtn.disabled = true;
     submitBtn.style.opacity = '0.7';
 
-    // Simulate form submission
-    setTimeout(() => {
+    // Collect form data
+    const formData = new FormData(contactForm);
+    const data = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      service: formData.get('service'),
+      message: formData.get('message'),
+      timestamp: new Date().toISOString()
+    };
+
+    try {
+      // Add a new document to the "messages" collection
+      await addDoc(collection(db, "messages"), data);
+
       submitBtn.textContent = '✓ Message Sent!';
       submitBtn.style.background = 'linear-gradient(135deg, #2d8a4e, #38a169)';
 
@@ -136,12 +163,23 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.style.background = '';
         contactForm.reset();
       }, 3000);
-    }, 1500);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+      submitBtn.textContent = 'Error. Try Again.';
+      submitBtn.style.background = '#e53e3e';
+
+      setTimeout(() => {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '1';
+        submitBtn.style.background = '';
+      }, 3000);
+    }
   });
 
   // --- Smooth Scroll for anchor links ---
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
+    anchor.addEventListener('click', function (e) {
       e.preventDefault();
       const target = document.querySelector(this.getAttribute('href'));
       if (target) {
