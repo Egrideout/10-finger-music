@@ -2,20 +2,6 @@
    10 Finger Music — Interactivity
    =================================== */
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const firebaseConfig = {
-  projectId: "tfm-music-db-2026",
-  appId: "1:1036854352534:web:d66c50547eb66f963140b7",
-  storageBucket: "tfm-music-db-2026.firebasestorage.app",
-  apiKey: "AIzaSyCvF0enmZ_venV6H5FtIFWAqqx0aOEjDpw",
-  authDomain: "tfm-music-db-2026.firebaseapp.com",
-  messagingSenderId: "1036854352534"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
 document.addEventListener('DOMContentLoaded', () => {
   // --- Mobile Navigation ---
@@ -126,57 +112,47 @@ document.addEventListener('DOMContentLoaded', () => {
     particlesContainer.appendChild(particle);
   }
 
-  // --- Contact Form Handler ---
-  const contactForm = document.getElementById('contact-form');
 
-  contactForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
+  // --- Modal Logic ---
+  const btnStartLearning = document.getElementById('btn-start-learning');
+  const lessonsModal = document.getElementById('lessons-modal');
+  const modalClose = document.getElementById('modal-close');
 
-    const submitBtn = document.getElementById('form-submit');
-    const originalText = submitBtn.textContent;
+  if (btnStartLearning && lessonsModal && modalClose) {
+    btnStartLearning.addEventListener('click', (e) => {
+      e.preventDefault();
+      lessonsModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
 
-    submitBtn.textContent = 'Sending...';
-    submitBtn.disabled = true;
-    submitBtn.style.opacity = '0.7';
-
-    // Collect form data
-    const formData = new FormData(contactForm);
-    const data = {
-      name: formData.get('name'),
-      phone: formData.get('phone'),
-      email: formData.get('email'),
-      service: formData.get('service'),
-      message: formData.get('message'),
-      timestamp: new Date().toISOString()
+    const closeModal = () => {
+      lessonsModal.classList.remove('open');
+      document.body.style.overflow = '';
     };
 
-    try {
-      // Add a new document to the "messages" collection
-      await addDoc(collection(db, "messages"), data);
+    modalClose.addEventListener('click', closeModal);
 
-      submitBtn.textContent = '✓ Message Sent!';
-      submitBtn.style.background = 'linear-gradient(135deg, #2d8a4e, #38a169)';
+    lessonsModal.addEventListener('click', (e) => {
+      if (e.target.classList.contains('modal') || e.target.classList.contains('modal-backdrop')) {
+        closeModal();
+      }
+    });
 
-      setTimeout(() => {
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-        submitBtn.style.opacity = '1';
-        submitBtn.style.background = '';
-        contactForm.reset();
-      }, 3000);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-      submitBtn.textContent = 'Error. Try Again.';
-      submitBtn.style.background = '#e53e3e';
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lessonsModal.classList.contains('open')) {
+        closeModal();
+      }
+    });
 
-      setTimeout(() => {
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-        submitBtn.style.opacity = '1';
-        submitBtn.style.background = '';
-      }, 3000);
+    // Smooth scroll for the CTA inside modal
+    const modalCtaBtn = lessonsModal.querySelector('.modal-cta-btn');
+    if (modalCtaBtn) {
+      modalCtaBtn.addEventListener('click', () => {
+        closeModal();
+      });
     }
-  });
+  }
 
   // --- Smooth Scroll for anchor links ---
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
