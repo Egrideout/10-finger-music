@@ -5,23 +5,33 @@
 /* --- Custom Properties --- */
 :root {
   /* Colors */
-  --color-bg-primary: #0a0a0f;
-  --color-bg-secondary: #111118;
-  --color-bg-card: rgba(255, 255, 255, 0.03);
-  --color-bg-glass: rgba(255, 255, 255, 0.05);
-  --color-glass-border: rgba(255, 255, 255, 0.08);
+  /* Colors - Light Theme Overhaul */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #faf8f5;
+  --color-bg-card: rgba(0, 0, 0, 0.02);
+  --color-bg-glass: rgba(0, 0, 0, 0.03);
+  --color-glass-border: rgba(0, 0, 0, 0.08);
 
-  --color-gold: #d4a853;
-  --color-gold-light: #e6c47a;
-  --color-gold-dark: #b8892e;
-  --color-gold-glow: rgba(212, 168, 83, 0.15);
+  --color-gold: #b8892e; /* Darker gold for better contrast on white */
+  --color-gold-light: #d4a853;
+  --color-gold-dark: #8c661d;
+  --color-gold-glow: rgba(184, 137, 46, 0.1);
 
-  --color-text-primary: #f5f0e8;
-  --color-text-secondary: rgba(245, 240, 232, 0.65);
-  --color-text-muted: rgba(245, 240, 232, 0.4);
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #4a4a4a;
+  --color-text-muted: #7a7a7a;
 
   --color-white: #ffffff;
   --color-black: #000000;
+
+  /* Bright/Light Palette */
+  --color-bg-light: #faf8f5;
+  --color-bg-light-alt: #f2eee6;
+  --color-text-dark-primary: #1a1a1a;
+  --color-text-dark-secondary: #4a4a4a;
+  --color-text-dark-muted: #7a7a7a;
+  --color-glass-light: rgba(0, 0, 0, 0.03);
+  --color-glass-border-light: rgba(0, 0, 0, 0.08);
 
   /* Typography */
   --font-heading: 'Inter', -apple-system, sans-serif;
@@ -74,6 +84,7 @@ body {
   line-height: 1.7;
   overflow-x: hidden;
 }
+
 
 img {
   max-width: 100%;
@@ -209,11 +220,11 @@ ul {
 }
 
 .navbar.scrolled {
-  background: rgba(10, 10, 15, 0.92);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   padding: var(--space-sm) 0;
-  border-bottom: 1px solid var(--color-glass-border);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .nav-container {
@@ -337,7 +348,7 @@ ul {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url('images/hero-bg.png') center/cover no-repeat;
+  background: url('images/hero-bg-bright.png') center/cover no-repeat;
   overflow: hidden;
 }
 
@@ -345,9 +356,9 @@ ul {
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg,
-      rgba(10, 10, 15, 0.7) 0%,
-      rgba(10, 10, 15, 0.85) 50%,
-      rgba(10, 10, 15, 0.97) 100%);
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0.7) 50%,
+      var(--color-bg-primary) 100%);
   z-index: 1;
 }
 
@@ -419,7 +430,7 @@ ul {
 }
 
 .hero-title-accent {
-  color: var(--color-white);
+  color: var(--color-gold);
 }
 
 .hero-description {
@@ -545,7 +556,7 @@ ul {
 .service-card-image-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, transparent 40%, var(--color-bg-primary) 100%);
+  background: linear-gradient(to bottom, transparent 40%, var(--color-bg-secondary) 100%);
 }
 
 .service-card-content {
@@ -932,7 +943,7 @@ a.contact-value:hover {
   height: 40px;
   border-radius: var(--radius-full);
   background: var(--color-bg-glass);
-  border: 1px solid var(--color-glass-border);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
