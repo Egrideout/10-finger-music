@@ -11,7 +11,7 @@ Vercel.
 
 ## Tech Stack
 - Static HTML/CSS/JS — no framework, no build process
-- Hosted: Vercel
+- Hosted: Vercel — https://10-finger-music.vercel.app
 - Local dev: VS Code + Live Server extension (localhost:5500)
 
 ## Deployment
