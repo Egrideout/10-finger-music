@@ -1,9 +1,3 @@
-# Firebase
-.firebaserc
-firebase.json
-firestore.rules
-firestore.indexes.json
-
 # OS
 .DS_Store
 Thumbs.db
